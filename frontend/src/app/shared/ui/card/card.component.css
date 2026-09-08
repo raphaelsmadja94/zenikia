@@ -1,0 +1,37 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.zk-card-root {
+  display: block;
+  height: 100%;
+  background: var(--znk-color-surface);
+  border: 1px solid var(--znk-color-border);
+  border-radius: var(--znk-radius-lg);
+  box-shadow: var(--znk-shadow-sm);
+  padding: var(--znk-space-6);
+}
+
+.zk-card-root--elevated {
+  box-shadow: var(--znk-shadow-md);
+}
+
+.zk-card-root--interactive {
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.zk-card-root--interactive:hover {
+  box-shadow: var(--znk-shadow-md);
+}
+.zk-card-root--interactive:focus-visible {
+  outline: none;
+  border-color: var(--znk-color-primary);
+  box-shadow: var(--znk-shadow-focus);
+}
+
+.zk-card-root--inverse {
+  background: var(--znk-color-surface-inverse);
+  color: var(--znk-color-text-on-inverse);
+  border-color: transparent;
+}

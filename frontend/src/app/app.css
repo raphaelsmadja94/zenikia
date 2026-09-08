@@ -1,0 +1,48 @@
+.zk-topbar {
+  height: 72px; /* valeur exacte relevée sur la nav zenika.com */
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--znk-color-border);
+  background: var(--znk-color-surface);
+}
+
+.zk-topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--znk-space-3);
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--znk-space-6);
+  text-decoration: none;
+  color: inherit;
+}
+
+.zk-topbar__mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--znk-radius-md);
+  background: var(--znk-gradient-brand);
+  color: var(--znk-color-on-primary);
+  font-family: var(--znk-font-heading);
+  font-weight: var(--znk-font-weight-bold);
+  font-size: var(--znk-font-size-sm);
+}
+
+.zk-topbar__name {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--znk-font-heading);
+  font-weight: var(--znk-font-weight-bold);
+  font-size: var(--znk-font-size-lg);
+  color: var(--znk-color-text-primary);
+}
+
+.zk-topbar__name small {
+  font-family: var(--znk-font-body);
+  font-weight: var(--znk-font-weight-regular);
+  font-size: var(--znk-font-size-xs);
+  color: var(--znk-color-text-secondary);
+}

@@ -1,0 +1,10 @@
+<div
+  class="zk-progress-meter"
+  role="progressbar"
+  [attr.aria-valuenow]="value()"
+  [attr.aria-valuemin]="0"
+  [attr.aria-valuemax]="max()"
+  [attr.aria-label]="label()"
+>
+  <div class="zk-progress-meter__fill" [style.width.%]="percent()"></div>
+</div>

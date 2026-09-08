@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+
+.zk-alert-root {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--znk-space-3);
+  padding: var(--znk-space-4);
+  border-radius: var(--znk-radius-md);
+  font-family: var(--znk-font-body);
+  font-size: var(--znk-font-size-base);
+  line-height: var(--znk-line-height-normal);
+}
+
+.zk-alert-root__icon {
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.zk-alert-root__content {
+  min-width: 0;
+}
+
+.zk-alert-root--success { background: var(--znk-color-success-bg); color: var(--znk-color-success); }
+.zk-alert-root--warning { background: var(--znk-color-warning-bg); color: var(--znk-color-warning); }
+.zk-alert-root--error { background: var(--znk-color-error-bg); color: var(--znk-color-error); }
+.zk-alert-root--info { background: var(--znk-color-info-bg); color: var(--znk-color-info); }

@@ -1,0 +1,109 @@
+.zk-hero {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--znk-space-16) var(--znk-space-6) var(--znk-space-10);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--znk-space-12);
+  align-items: center;
+}
+
+.zk-hero h1 {
+  font-size: var(--znk-font-size-3xl);
+  line-height: var(--znk-line-height-tight);
+  margin: var(--znk-space-5) 0;
+}
+
+.zk-hero__content p {
+  color: var(--znk-color-text-secondary);
+  font-size: var(--znk-font-size-md);
+  max-width: 46ch;
+}
+
+/* Link styled as the page's single most important action — the Zenika brand
+   gradient, reserved for this kind of "signature" CTA (design-system/components/button.md). */
+.zk-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--znk-space-2);
+  padding: var(--znk-space-4) var(--znk-space-6);
+  border-radius: var(--znk-radius-md);
+  background: var(--znk-gradient-brand);
+  color: var(--znk-color-on-primary);
+  font-weight: var(--znk-font-weight-medium);
+  font-size: var(--znk-font-size-md);
+  text-decoration: none;
+  box-shadow: var(--znk-shadow-sm);
+  transition: filter 0.15s ease;
+}
+
+.zk-hero__cta:hover {
+  filter: brightness(1.06);
+}
+
+.zk-hero__cta:focus-visible {
+  outline: none;
+  box-shadow: var(--znk-shadow-focus);
+}
+
+.zk-hero__panels {
+  display: grid;
+  gap: var(--znk-space-4);
+}
+
+.zk-hero__panel h3 {
+  font-size: var(--znk-font-size-md);
+  color: var(--znk-color-primary);
+}
+
+.zk-hero__panel p {
+  margin: 0;
+  color: var(--znk-color-text-secondary);
+  font-size: var(--znk-font-size-sm);
+}
+
+.zk-steps h2 {
+  font-size: var(--znk-font-size-xl);
+  margin-bottom: var(--znk-space-6);
+}
+
+.zk-steps__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--znk-space-5);
+}
+
+.zk-steps__num {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--znk-radius-full);
+  background: var(--znk-color-primary-subtle);
+  color: var(--znk-color-primary);
+  font-weight: var(--znk-font-weight-bold);
+  font-size: var(--znk-font-size-sm);
+  margin-bottom: var(--znk-space-3);
+}
+
+.zk-steps__item h4 {
+  font-size: var(--znk-font-size-base);
+  margin-bottom: var(--znk-space-2);
+}
+
+.zk-steps__item p {
+  margin: 0;
+  font-size: var(--znk-font-size-sm);
+  color: var(--znk-color-text-secondary);
+}
+
+@media (max-width: 899px) {
+  .zk-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .zk-steps__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

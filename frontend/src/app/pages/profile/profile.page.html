@@ -1,0 +1,94 @@
+@if (loading()) {
+  <div class="zk-page">
+    <zk-skeleton shape="text" width="140px" height="0.8rem" />
+    <div class="zk-loading-title"><zk-skeleton shape="text" width="360px" height="2rem" /></div>
+    <div class="zk-profile-grid">
+      <zk-card><zk-skeleton shape="block" width="100%" height="140px" /></zk-card>
+      <zk-card><zk-skeleton shape="block" width="100%" height="140px" /></zk-card>
+    </div>
+  </div>
+} @else if (profile(); as profile) {
+  <div class="zk-page">
+    <span class="zk-eyebrow">Profil détecté</span>
+    <h1>{{ profile.role }}</h1>
+    @if (profile.experienceYears !== null) {
+      <p class="zk-subtitle">{{ profile.experienceYears }} ans d'expérience déclarés</p>
+    }
+
+    <div class="zk-profile-grid">
+      <zk-card>
+        <h3>Compétences</h3>
+        <div class="zk-skill-list">
+          @for (skill of profile.skills; track skill.name) {
+            <zk-badge variant="primary">
+              {{ skill.name }}
+              <small>&nbsp;· {{ skill.claimedLevel | lowercase }}</small>
+            </zk-badge>
+          }
+          @empty {
+            <p class="zk-empty">Aucune compétence détectée dans ce CV.</p>
+          }
+        </div>
+        <p class="zk-disclaimer">Niveau auto-déclaré tel qu'il ressort du CV — jamais un niveau certifié.</p>
+      </zk-card>
+
+      <zk-card>
+        <h3>Affirmations à challenger</h3>
+        <ul class="zk-claim-list">
+          @for (claim of profile.claims; track claim.id) {
+            <li>
+              <p>{{ claim.statement }}</p>
+              @if (claim.challengeableConcepts.length) {
+                <div class="zk-tag-row">
+                  @for (concept of claim.challengeableConcepts; track concept) {
+                    <zk-badge variant="warning">{{ concept }}</zk-badge>
+                  }
+                </div>
+              }
+            </li>
+          }
+          @empty {
+            <p class="zk-empty">Aucune affirmation notable détectée.</p>
+          }
+        </ul>
+      </zk-card>
+    </div>
+
+    <section class="zk-persona-section">
+      <h2>Choisis ton interlocuteur</h2>
+      <div class="zk-persona-grid">
+        @for (option of personaOptions; track option.value) {
+          <button
+            type="button"
+            class="zk-persona-card"
+            [class.zk-persona-card--selected]="selectedPersona() === option.value"
+            (click)="selectPersona(option.value)"
+          >
+            <span class="zk-persona-card__icon">{{ option.icon }}</span>
+            <strong>{{ option.label }}</strong>
+            <p>{{ option.description }}</p>
+          </button>
+        }
+      </div>
+
+      @if (errorMessage(); as error) {
+        <zk-alert variant="error" class="zk-persona-error">{{ error }}</zk-alert>
+      }
+
+      <zk-button
+        class="zk-start-btn"
+        variant="primary"
+        size="lg"
+        [disabled]="!selectedPersona() || starting()"
+        [loading]="starting()"
+        (click)="startInterview()"
+      >
+        @if (starting()) {
+          Démarrage…
+        } @else {
+          Commencer l'entretien
+        }
+      </zk-button>
+    </section>
+  </div>
+}

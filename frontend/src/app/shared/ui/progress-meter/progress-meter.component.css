@@ -1,0 +1,21 @@
+:host {
+  display: block;
+}
+
+.zk-progress-meter {
+  height: 8px;
+  border-radius: var(--znk-radius-full);
+  background: var(--znk-color-surface-secondary);
+  overflow: hidden;
+}
+
+.zk-progress-meter__fill {
+  height: 100%;
+  border-radius: var(--znk-radius-full);
+  background: var(--znk-color-primary);
+  transition: width 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zk-progress-meter__fill { transition: none; }
+}

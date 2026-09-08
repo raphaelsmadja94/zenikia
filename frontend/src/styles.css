@@ -1,0 +1,100 @@
+/* ZenikIA — global resets, built on the Design System tokens.
+   Source of truth: ../../design-system/DESIGN_SYSTEM.md — read it before
+   changing anything here. Sober, modern, "internal product" look.
+
+   Component-level styling (buttons, badges, alerts, meters, skeletons)
+   now lives in the Angular components under
+   frontend/src/app/shared/ui/ (zk-button, zk-badge, zk-alert,
+   zk-progress-meter, zk-skeleton) — this file only keeps generic,
+   cross-cutting layout utilities that don't warrant a component. */
+
+@import '../../design-system/tokens/index.css';
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--znk-font-body);
+  background: var(--znk-color-background);
+  color: var(--znk-color-text-primary);
+  font-size: var(--znk-font-size-base);
+  line-height: var(--znk-line-height-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 0.4em 0;
+  font-family: var(--znk-font-heading);
+  font-weight: var(--znk-font-weight-bold);
+  letter-spacing: var(--znk-letter-spacing-tight);
+}
+
+p {
+  margin: 0 0 1em 0;
+}
+
+button {
+  font-family: inherit;
+}
+
+a {
+  color: var(--znk-color-primary);
+}
+
+/* ---- Layout helpers ---- */
+
+.zk-page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--znk-space-10) var(--znk-space-6) var(--znk-space-16);
+}
+
+.zk-page--narrow {
+  max-width: 720px;
+}
+
+/* ---- Card (generic surface) ----
+   For a standalone card, prefer the <zk-card> component. This utility
+   class remains for page-specific card variants that extend it with
+   local layout (persona picker, score cards...) — see each page's own
+   CSS for those. It must still only reference Design System tokens. */
+
+.zk-card {
+  background: var(--znk-color-surface);
+  border: 1px solid var(--znk-color-border);
+  border-radius: var(--znk-radius-lg);
+  box-shadow: var(--znk-shadow-sm);
+  padding: var(--znk-space-8); /* 32px — la valeur exacte relevée sur les cards zenika.com */
+}
+
+/* ---- Scrollbar (subtle) ---- */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--znk-color-border-strong);
+  border-radius: var(--znk-radius-full);
+}
+
+.zk-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

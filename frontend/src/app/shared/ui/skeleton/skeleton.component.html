@@ -1,0 +1,7 @@
+<span
+  class="zk-skeleton"
+  [class]="'zk-skeleton--' + shape()"
+  [style.width]="width()"
+  [style.height]="shape() === 'circle' ? width() : height()"
+  aria-hidden="true"
+></span>

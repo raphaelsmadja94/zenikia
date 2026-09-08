@@ -1,0 +1,22 @@
+:host {
+  display: inline-flex;
+}
+
+.zk-badge-root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--znk-space-1);
+  padding: var(--znk-space-1) var(--znk-space-3);
+  border-radius: var(--znk-radius-full);
+  font-family: var(--znk-font-body);
+  font-size: var(--znk-font-size-xs);
+  font-weight: var(--znk-font-weight-medium);
+  white-space: nowrap;
+}
+
+.zk-badge-root--neutral { background: var(--znk-color-surface-secondary); color: var(--znk-color-text-secondary); }
+.zk-badge-root--primary { background: var(--znk-color-primary-subtle); color: var(--znk-color-primary); }
+.zk-badge-root--success { background: var(--znk-color-success-bg); color: var(--znk-color-success); }
+.zk-badge-root--warning { background: var(--znk-color-warning-bg); color: var(--znk-color-warning); }
+.zk-badge-root--error { background: var(--znk-color-error-bg); color: var(--znk-color-error); }
+.zk-badge-root--info { background: var(--znk-color-info-bg); color: var(--znk-color-info); }

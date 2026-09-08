@@ -1,0 +1,205 @@
+@if (errorMessage(); as error) {
+  <div class="zk-page zk-page--narrow">
+    <zk-alert variant="error">{{ error }}</zk-alert>
+  </div>
+}
+
+@if (session(); as session) {
+  <div class="zk-page zk-interview">
+    <header class="zk-interview__header">
+      <div class="zk-interview__meta">
+        <zk-badge variant="primary">{{ personaLabel(session.persona) }}</zk-badge>
+        <span class="zk-meta-item">🎯 {{ currentQuestion()?.targetSkill ?? session.currentTargetSkill }}</span>
+        <span class="zk-meta-item">
+          Difficulté
+          <span class="zk-dots">
+            @for (d of [1, 2, 3, 4, 5]; track d) {
+              <span class="zk-dot" [class.zk-dot--filled]="d <= (currentQuestion()?.difficulty ?? session.currentDifficulty)"></span>
+            }
+          </span>
+        </span>
+        <span class="zk-meta-item">Question {{ session.totalTurns }}</span>
+      </div>
+
+      <span class="zk-state-pill" [attr.data-state]="uiState()">
+        @switch (uiState()) {
+          @case ('READY') { Prêt }
+          @case ('AI_SPEAKING') { 🔊 ZenikIA parle… }
+          @case ('LISTENING') { 🎙️ Écoute en cours… }
+          @case ('TRANSCRIBING') { ✍️ Transcription… }
+          @case ('ANALYZING') { 🧠 Analyse en cours… }
+          @case ('FEEDBACK') { ✅ Feedback prêt }
+          @case ('FINISHED') { 🏁 Entretien terminé }
+        }
+      </span>
+    </header>
+
+    @if (uiState() !== 'FINISHED' && currentQuestion(); as question) {
+      <zk-card class="zk-question-card">
+        <span class="zk-question-type">{{ question.questionType }}</span>
+        <p class="zk-question-text">{{ question.text }}</p>
+        <zk-button variant="ghost" size="sm" (click)="speakQuestion()" [disabled]="uiState() === 'AI_SPEAKING' || !tts.supported">
+          🔊 Écouter la question
+        </zk-button>
+      </zk-card>
+
+      @if (uiState() === 'READY') {
+        <div class="zk-mic-zone">
+          <button class="zk-mic-btn" (click)="startRecording()" aria-label="Démarrer l'enregistrement de ta réponse">🎤</button>
+          <p>Clique pour répondre à l'oral</p>
+        </div>
+      }
+
+      @if (uiState() === 'LISTENING') {
+        <div class="zk-mic-zone">
+          <button
+            class="zk-mic-btn zk-mic-btn--recording"
+            (click)="retrying() ? stopAndSubmitRetry() : stopAndSubmit()"
+            aria-label="Arrêter l'enregistrement et envoyer ta réponse"
+          >⏹</button>
+          <p class="zk-timer">{{ (elapsedSeconds() / 60 | number: '1.0-0') }}:{{ (elapsedSeconds() % 60).toString().padStart(2, '0') }}</p>
+          <p>Clique pour arrêter et envoyer ta réponse</p>
+          @if (speechRecognition.supported) {
+            <p class="zk-live-transcript">{{ speechRecognition.transcript() || '…' }}</p>
+          } @else {
+            <p class="zk-hint">Transcription en direct non disponible sur ce navigateur (essaie Chrome) — la réponse sera transcrite côté serveur.</p>
+          }
+        </div>
+      }
+
+      @if (uiState() === 'TRANSCRIBING' || uiState() === 'ANALYZING') {
+        <div class="zk-mic-zone">
+          <div class="zk-spinner"></div>
+          <p>{{ uiState() === 'TRANSCRIBING' ? 'Transcription de ta réponse…' : 'ZenikIA analyse ta réponse…' }}</p>
+        </div>
+      }
+    }
+
+    @if (uiState() === 'FEEDBACK' && displayedFeedback(); as feedback) {
+      <div class="zk-feedback">
+        @if (feedback.isRetry && retryComparison(); as cmp) {
+          <zk-card class="zk-retry-compare">
+            <h3>Avant / Après</h3>
+            <div class="zk-compare-grid">
+              <div><span>Clarté</span><strong>{{ cmp.clarityBefore }} → {{ cmp.clarityAfter }}</strong></div>
+              <div><span>Concision</span><strong>{{ cmp.concisionBefore }} → {{ cmp.concisionAfter }}</strong></div>
+              <div><span>Tics de langage</span><strong>{{ cmp.fillerWordsBefore }} → {{ cmp.fillerWordsAfter }}</strong></div>
+              <div><span>Technique</span><strong>{{ cmp.technicalScoreBefore | number: '1.1-1' }} → {{ cmp.technicalScoreAfter | number: '1.1-1' }}</strong></div>
+            </div>
+          </zk-card>
+        }
+
+        <zk-card class="zk-transcript-card">
+          <h3>Ta réponse (transcrite)</h3>
+          <p class="zk-transcript">{{ feedback.transcript || '(transcription vide)' }}</p>
+        </zk-card>
+
+        <div class="zk-split-grid">
+          <zk-card class="zk-assess-card">
+            <h3>Technique <small>— le fond</small></h3>
+            <div class="zk-score-rows">
+              <div class="zk-score-row"><span>Exactitude</span><zk-progress-meter [value]="feedback.technical.correctness" label="Exactitude" /><b>{{ feedback.technical.correctness }}/5</b></div>
+              <div class="zk-score-row"><span>Profondeur</span><zk-progress-meter [value]="feedback.technical.depth" label="Profondeur" /><b>{{ feedback.technical.depth }}/5</b></div>
+              <div class="zk-score-row"><span>Raisonnement</span><zk-progress-meter [value]="feedback.technical.reasoning" label="Raisonnement" /><b>{{ feedback.technical.reasoning }}/5</b></div>
+              <div class="zk-score-row"><span>Expérience réelle</span><zk-progress-meter [value]="feedback.technical.realWorldExperience" label="Expérience réelle" /><b>{{ feedback.technical.realWorldExperience }}/5</b></div>
+              <div class="zk-score-row"><span>Exemples</span><zk-progress-meter [value]="feedback.technical.examples" label="Exemples" /><b>{{ feedback.technical.examples }}/5</b></div>
+              <div class="zk-score-row"><span>Trade-offs</span><zk-progress-meter [value]="feedback.technical.tradeOffThinking" label="Trade-offs" /><b>{{ feedback.technical.tradeOffThinking }}/5</b></div>
+              <div class="zk-score-row"><span>Production</span><zk-progress-meter [value]="feedback.technical.productionAwareness" label="Production" /><b>{{ feedback.technical.productionAwareness }}/5</b></div>
+            </div>
+            @if (feedback.technical.strengths.length) {
+              <p class="zk-list-label">✅ Points forts</p>
+              <ul>@for (s of feedback.technical.strengths; track s) { <li>{{ s }}</li> }</ul>
+            }
+            @if (feedback.technical.weaknesses.length) {
+              <p class="zk-list-label">⚠️ Points faibles</p>
+              <ul>@for (w of feedback.technical.weaknesses; track w) { <li>{{ w }}</li> }</ul>
+            }
+            @if (feedback.technical.missingConcepts.length) {
+              <p class="zk-list-label">❓ Concepts manquants</p>
+              <div class="zk-tag-row">@for (c of feedback.technical.missingConcepts; track c) { <zk-badge variant="warning">{{ c }}</zk-badge> }</div>
+            }
+          </zk-card>
+
+          <zk-card class="zk-assess-card">
+            <h3>Communication <small>— la forme</small></h3>
+            <div class="zk-comm-stats">
+              <div><b>{{ feedback.communication.wordsPerMinute | number: '1.0-0' }}</b><span>mots/min</span></div>
+              <div><b>{{ feedback.communication.durationSeconds | number: '1.0-0' }}s</b><span>durée</span></div>
+              <div><b>{{ feedback.communication.totalFillerWordCount }}</b><span>tics de langage</span></div>
+            </div>
+            @if (feedback.communication.totalFillerWordCount > 0) {
+              <div class="zk-tag-row zk-filler-tags">
+                @for (fw of feedback.communication.fillerWords | keyvalue; track fw.key) {
+                  <zk-badge variant="error">"{{ fw.key }}" × {{ fw.value }}</zk-badge>
+                }
+              </div>
+            }
+            <div class="zk-score-rows">
+              <div class="zk-score-row"><span>Clarté</span><zk-progress-meter [value]="feedback.communication.clarity" label="Clarté" /><b>{{ feedback.communication.clarity }}/5</b></div>
+              <div class="zk-score-row"><span>Structure</span><zk-progress-meter [value]="feedback.communication.structure" label="Structure" /><b>{{ feedback.communication.structure }}/5</b></div>
+              <div class="zk-score-row"><span>Concision</span><zk-progress-meter [value]="feedback.communication.concision" label="Concision" /><b>{{ feedback.communication.concision }}/5</b></div>
+              <div class="zk-score-row"><span>Fluidité</span><zk-progress-meter [value]="feedback.communication.fluency" label="Fluidité" /><b>{{ feedback.communication.fluency }}/5</b></div>
+              <div class="zk-score-row"><span>Impact</span><zk-progress-meter [value]="feedback.communication.impact" label="Impact" /><b>{{ feedback.communication.impact }}/5</b></div>
+              <div class="zk-score-row"><span>Vulgarisation</span><zk-progress-meter [value]="feedback.communication.vulgarisation" label="Vulgarisation" /><b>{{ feedback.communication.vulgarisation }}/5</b></div>
+              <div class="zk-score-row"><span>Adaptation</span><zk-progress-meter [value]="feedback.communication.adaptationToPersona" label="Adaptation" /><b>{{ feedback.communication.adaptationToPersona }}/5</b></div>
+            </div>
+            @if (feedback.communication.weaknesses.length) {
+              <p class="zk-list-label">⚠️ Points faibles</p>
+              <ul>@for (w of feedback.communication.weaknesses; track w) { <li>{{ w }}</li> }</ul>
+            }
+          </zk-card>
+        </div>
+
+        <zk-card class="zk-coaching-card">
+          <h3>💡 Coaching</h3>
+          <p class="zk-coaching-observation">{{ feedback.coaching.observation }}</p>
+          <p class="zk-coaching-recommendation">{{ feedback.coaching.recommendation }}</p>
+          @if (feedback.coaching.priorityActions.length) {
+            <ol class="zk-priority-list">
+              @for (action of feedback.coaching.priorityActions; track action) { <li>{{ action }}</li> }
+            </ol>
+          }
+          @if (feedback.coaching.starBreakdown; as star) {
+            <div class="zk-star-grid">
+              <span [class.zk-star--ok]="star.situationPresent">Situation {{ star.situationPresent ? '✅' : '❌' }}</span>
+              <span [class.zk-star--ok]="star.taskPresent">Task {{ star.taskPresent ? '✅' : '⚠️' }}</span>
+              <span [class.zk-star--ok]="star.actionPresent">Action {{ star.actionPresent ? '✅' : '⚠️' }}</span>
+              <span [class.zk-star--ok]="star.resultPresent">Result {{ star.resultPresent ? '✅' : '❌' }}</span>
+            </div>
+            @if (star.note) { <p class="zk-star-note">{{ star.note }}</p> }
+          }
+
+          @if (feedback.coaching.modelAnswer) {
+            <div class="zk-model-answer">
+              <zk-button variant="ghost" size="sm" (click)="toggleModelAnswer()">
+                {{ showModelAnswer() ? '🙈 Cacher la réponse modèle' : '👁️ Voir une réponse modèle' }}
+              </zk-button>
+              @if (showModelAnswer()) {
+                <p class="zk-model-answer__text">{{ feedback.coaching.modelAnswer }}</p>
+              }
+            </div>
+          }
+        </zk-card>
+
+        <p class="zk-indicator-disclaimer">Indicateur de coaching généré à partir de cette session — pas un niveau certifié.</p>
+
+        <div class="zk-feedback-actions">
+          <zk-button variant="ghost" (click)="startRetryRecording()">🔁 Réessayer cette question</zk-button>
+          @if (interviewFinished()) {
+            <zk-button variant="primary" (click)="goToNextQuestion()">Voir le rapport final</zk-button>
+          } @else {
+            <zk-button variant="primary" (click)="goToNextQuestion()">Question suivante →</zk-button>
+          }
+        </div>
+      </div>
+    }
+
+    @if (uiState() === 'FINISHED') {
+      <zk-card class="zk-finished-card">
+        <h2>Entretien terminé</h2>
+        <p>Tu as complété cette session avec {{ session.totalTurns }} question(s) traitée(s).</p>
+        <zk-button variant="primary" (click)="goToReport()">Voir le rapport final</zk-button>
+      </zk-card>
+    }
+  </div>
+}

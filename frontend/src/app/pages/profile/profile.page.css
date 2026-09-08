@@ -1,0 +1,154 @@
+.zk-eyebrow {
+  display: inline-block;
+  font-size: var(--znk-font-size-xs);
+  font-weight: var(--znk-font-weight-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--znk-color-info);
+  margin-bottom: var(--znk-space-2);
+}
+
+.zk-loading-title {
+  margin: var(--znk-space-3) 0 var(--znk-space-6);
+}
+
+.zk-subtitle {
+  color: var(--znk-color-text-secondary);
+  margin-bottom: var(--znk-space-6);
+}
+
+.zk-profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--znk-space-5);
+  margin-bottom: var(--znk-space-10);
+}
+
+.zk-profile-grid h3 {
+  font-size: var(--znk-font-size-base);
+  margin-bottom: var(--znk-space-4);
+}
+
+.zk-skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--znk-space-2);
+}
+
+.zk-skill-list small {
+  text-transform: capitalize;
+  opacity: 0.75;
+}
+
+.zk-disclaimer {
+  margin: var(--znk-space-4) 0 0;
+  font-size: var(--znk-font-size-xs);
+  color: var(--znk-color-text-muted);
+}
+
+.zk-claim-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--znk-space-4);
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.zk-claim-list li {
+  border-left: 3px solid var(--znk-color-info);
+  padding: var(--znk-space-1) 0 var(--znk-space-1) var(--znk-space-3);
+}
+
+.zk-claim-list p {
+  margin: 0 0 var(--znk-space-2);
+  font-size: var(--znk-font-size-sm);
+}
+
+.zk-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--znk-space-2);
+}
+
+.zk-empty {
+  color: var(--znk-color-text-muted);
+  font-size: var(--znk-font-size-sm);
+  margin: 0;
+}
+
+.zk-persona-section h2 {
+  font-size: var(--znk-font-size-xl);
+  margin-bottom: var(--znk-space-4);
+}
+
+.zk-persona-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--znk-space-4);
+  margin-bottom: var(--znk-space-6);
+}
+
+.zk-persona-card {
+  text-align: left;
+  background: var(--znk-color-surface);
+  border: 1.5px solid var(--znk-color-border);
+  border-radius: var(--znk-radius-lg);
+  padding: var(--znk-space-5);
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.zk-persona-card:hover {
+  border-color: var(--znk-color-primary);
+}
+
+.zk-persona-card:focus-visible {
+  outline: none;
+  box-shadow: var(--znk-shadow-focus);
+}
+
+.zk-persona-card--selected {
+  border-color: var(--znk-color-primary);
+  box-shadow: var(--znk-shadow-focus);
+}
+
+.zk-persona-card__icon {
+  font-size: var(--znk-font-size-xl);
+  display: block;
+  margin-bottom: var(--znk-space-2);
+}
+
+.zk-persona-card strong {
+  display: block;
+  font-family: var(--znk-font-heading);
+  font-size: var(--znk-font-size-base);
+  margin-bottom: var(--znk-space-2);
+}
+
+.zk-persona-card p {
+  margin: 0;
+  font-size: var(--znk-font-size-sm);
+  color: var(--znk-color-text-secondary);
+  line-height: var(--znk-line-height-normal);
+}
+
+.zk-start-btn {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+}
+
+.zk-persona-error {
+  margin-bottom: var(--znk-space-4);
+  max-width: 480px;
+}
+
+@media (max-width: 899px) {
+  .zk-profile-grid,
+  .zk-persona-grid {
+    grid-template-columns: 1fr;
+  }
+}

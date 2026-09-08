@@ -1,0 +1,82 @@
+:host {
+  display: inline-flex;
+}
+
+.zk-button {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: var(--znk-space-2);
+  font-family: var(--znk-font-body);
+  font-weight: var(--znk-font-weight-medium);
+  border-radius: var(--znk-radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.06s ease;
+}
+
+.zk-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.zk-button:focus-visible {
+  outline: none;
+  box-shadow: var(--znk-shadow-focus);
+}
+
+.zk-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Sizes */
+.zk-button--sm { height: 32px; padding: 0 var(--znk-space-3); font-size: var(--znk-font-size-sm); }
+.zk-button--md { height: 40px; padding: 0 var(--znk-space-5); font-size: var(--znk-font-size-base); }
+.zk-button--lg { height: 48px; padding: 0 var(--znk-space-6); font-size: var(--znk-font-size-md); }
+
+/* Variants */
+.zk-button--primary {
+  background: var(--znk-color-primary);
+  color: var(--znk-color-on-primary);
+}
+.zk-button--primary:hover:not(:disabled) { background: var(--znk-color-primary-hover); }
+.zk-button--primary:active:not(:disabled) { background: var(--znk-color-primary-active); }
+
+.zk-button--brand {
+  background: var(--znk-gradient-brand);
+  color: var(--znk-color-on-primary);
+  box-shadow: var(--znk-shadow-sm);
+}
+.zk-button--brand:hover:not(:disabled) { filter: brightness(1.06); }
+
+.zk-button--ghost {
+  background: transparent;
+  border-color: var(--znk-color-border);
+  color: var(--znk-color-text-primary);
+}
+.zk-button--ghost:hover:not(:disabled) { background: var(--znk-color-surface-secondary); }
+
+.zk-button--danger {
+  background: var(--znk-color-error-bg);
+  color: var(--znk-color-error);
+}
+.zk-button--danger:hover:not(:disabled) { filter: brightness(0.97); }
+
+.zk-button__spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--znk-radius-full);
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  animation: zk-button-spin 0.7s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zk-button__spinner { animation-duration: 1.4s; }
+}
+
+@keyframes zk-button-spin {
+  to { transform: rotate(360deg); }
+}

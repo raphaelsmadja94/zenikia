@@ -1,0 +1,65 @@
+@if (loading()) {
+  <div class="zk-page">
+    <zk-skeleton shape="text" width="120px" height="0.8rem" />
+    <div class="zk-loading-title"><zk-skeleton shape="text" width="320px" height="2rem" /></div>
+    <div class="zk-scores-grid">
+      <zk-card><zk-skeleton shape="block" width="100%" height="120px" /></zk-card>
+      <zk-card><zk-skeleton shape="block" width="100%" height="120px" /></zk-card>
+      <zk-card><zk-skeleton shape="block" width="100%" height="120px" /></zk-card>
+    </div>
+  </div>
+} @else if (errorMessage(); as error) {
+  <div class="zk-page zk-page--narrow"><zk-alert variant="error">{{ error }}</zk-alert></div>
+} @else if (report(); as report) {
+  <div class="zk-page">
+    <span class="zk-eyebrow">Rapport final</span>
+    <h1>Résultats de ta session</h1>
+
+    <div class="zk-scores-grid">
+      <zk-card class="zk-score-card zk-score-card--technical">
+        <span class="zk-score-card__label">TECHNICAL MASTERY</span>
+        <span class="zk-score-card__value">{{ report.technicalMastery | number: '1.1-1' }}<small>/10</small></span>
+        <p>Fond — exactitude, profondeur, raisonnement, trade-offs</p>
+      </zk-card>
+      <zk-card class="zk-score-card zk-score-card--communication">
+        <span class="zk-score-card__label">COMMUNICATION</span>
+        <span class="zk-score-card__value">{{ report.communication | number: '1.1-1' }}<small>/10</small></span>
+        <p>Forme — clarté, structure, concision, impact</p>
+      </zk-card>
+      <zk-card class="zk-score-card zk-score-card--effectiveness">
+        <span class="zk-score-card__label">INTERVIEW EFFECTIVENESS</span>
+        <span class="zk-score-card__value">{{ report.interviewEffectiveness | number: '1.1-1' }}<small>/10</small></span>
+        <p>Indicateur composite (fond pondéré plus fort)</p>
+      </zk-card>
+    </div>
+
+    <div class="zk-report-grid">
+      <zk-card>
+        <h3>🏆 Top Strengths</h3>
+        <ul>
+          @for (s of report.topStrengths; track s) { <li>{{ s }}</li> }
+          @empty { <p class="zk-empty">Pas assez de signal pour cette session.</p> }
+        </ul>
+      </zk-card>
+      <zk-card>
+        <h3>🎯 Top Priorities</h3>
+        <ul>
+          @for (p of report.topPriorities; track p) { <li>{{ p }}</li> }
+          @empty { <p class="zk-empty">Pas assez de signal pour cette session.</p> }
+        </ul>
+      </zk-card>
+    </div>
+
+    <zk-card class="zk-next-steps">
+      <h3>📌 Recommended Next Steps</h3>
+      <ol>
+        @for (step of report.recommendedNextSteps; track step) { <li>{{ step }}</li> }
+        @empty { <p class="zk-empty">Aucune recommandation générée.</p> }
+      </ol>
+    </zk-card>
+
+    <p class="zk-indicator-disclaimer">{{ report.disclaimer }}</p>
+
+    <a routerLink="/upload" class="zk-restart-link">Préparer un nouvel entretien</a>
+  </div>
+}

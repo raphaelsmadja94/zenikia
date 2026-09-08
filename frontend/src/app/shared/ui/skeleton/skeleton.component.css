@@ -1,0 +1,31 @@
+:host {
+  display: inline-block;
+}
+
+.zk-skeleton {
+  display: block;
+  background: linear-gradient(
+    100deg,
+    var(--znk-color-surface-secondary) 30%,
+    var(--znk-color-border) 50%,
+    var(--znk-color-surface-secondary) 70%
+  );
+  background-size: 200% 100%;
+  animation: zk-skeleton-sweep 1.4s ease-in-out infinite;
+}
+
+.zk-skeleton--text { border-radius: var(--znk-radius-sm); }
+.zk-skeleton--block { border-radius: var(--znk-radius-md); }
+.zk-skeleton--circle { border-radius: var(--znk-radius-full); }
+
+@keyframes zk-skeleton-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zk-skeleton {
+    animation: none;
+    background: var(--znk-color-surface-secondary);
+  }
+}

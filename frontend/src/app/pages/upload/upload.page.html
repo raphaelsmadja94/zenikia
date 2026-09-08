@@ -1,0 +1,51 @@
+<div class="zk-page zk-page--narrow">
+  <h1>Importe ton CV</h1>
+  <p class="zk-subtitle">Format PDF uniquement. ZenikIA en extrait ton rôle, tes compétences et les affirmations à challenger — rien n'est conservé au-delà de cette analyse.</p>
+
+  <zk-card>
+    <label
+      class="zk-dropzone"
+      [class.zk-dropzone--over]="dragOver()"
+      [class.zk-dropzone--filled]="selectedFile()"
+      (drop)="onDrop($event)"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave()"
+    >
+      <input type="file" accept="application/pdf" (change)="onFileSelected($event)" class="zk-visually-hidden" />
+      @if (selectedFile(); as file) {
+        <div class="zk-dropzone__file">
+          <span class="zk-dropzone__icon">📄</span>
+          <div>
+            <strong>{{ file.name }}</strong>
+            <div class="zk-dropzone__hint">{{ (file.size / 1024).toFixed(0) }} Ko — clique pour changer de fichier</div>
+          </div>
+        </div>
+      } @else {
+        <div class="zk-dropzone__empty">
+          <span class="zk-dropzone__icon">⬆️</span>
+          <strong>Glisse ton CV ici</strong>
+          <span class="zk-dropzone__hint">ou clique pour parcourir (PDF, 15 Mo max)</span>
+        </div>
+      }
+    </label>
+
+    @if (errorMessage(); as error) {
+      <zk-alert variant="error" class="zk-submit-alert">{{ error }}</zk-alert>
+    }
+
+    <zk-button
+      class="zk-submit"
+      variant="primary"
+      size="lg"
+      [disabled]="!selectedFile() || uploading()"
+      [loading]="uploading()"
+      (click)="submit()"
+    >
+      @if (uploading()) {
+        Analyse en cours…
+      } @else {
+        Analyser mon CV
+      }
+    </zk-button>
+  </zk-card>
+</div>

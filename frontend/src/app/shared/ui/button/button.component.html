@@ -1,0 +1,12 @@
+<button
+  class="zk-button"
+  [class]="'zk-button--' + variant() + ' zk-button--' + size()"
+  [attr.type]="type()"
+  [disabled]="disabled() || loading()"
+  [attr.aria-busy]="loading() || null"
+>
+  @if (loading()) {
+    <span class="zk-button__spinner" aria-hidden="true"></span>
+  }
+  <ng-content />
+</button>
