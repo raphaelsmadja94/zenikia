@@ -1,0 +1,15 @@
+/*
+ * ZenikIA Design System — Z-index tokens
+ * Une seule échelle partagée pour éviter la surenchère ("z-index: 9999")
+ * qu'on voit apparaître dès qu'un deuxième développeur (humain ou Claude)
+ * ajoute un élément superposé sans connaître les valeurs existantes.
+ */
+
+:root {
+  --znk-z-dropdown: 100;
+  --znk-z-sticky: 200;
+  --znk-z-overlay: 300;   /* fond assombri derrière une modale */
+  --znk-z-modal: 310;
+  --znk-z-toast: 400;     /* toujours au-dessus d'une modale */
+  --znk-z-tooltip: 500;
+}

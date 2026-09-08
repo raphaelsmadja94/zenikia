@@ -1,0 +1,33 @@
+/*
+ * ZenikIA Design System — Typography tokens
+ * Source : zenika.com utilise Nunito (titres, 700) + Open Sans (corps, 400).
+ * Repris tel quel — c'est un vrai marqueur de marque, peu coûteux à
+ * respecter, et Google Fonts les sert tous les deux.
+ */
+
+:root {
+  --znk-font-heading: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --znk-font-body: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --znk-font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Consolas, monospace;
+
+  /* Échelle resserrée pour un produit dense (le site marketing peut se permettre des titres
+     à 42px ; un outil de travail a besoin de plus de contenu visible à l'écran). */
+  --znk-font-size-xs: 0.75rem;    /* 12px — légendes, disclaimers */
+  --znk-font-size-sm: 0.8125rem;  /* 13px — labels, métadonnées */
+  --znk-font-size-base: 0.9375rem;/* 15px — corps de texte par défaut */
+  --znk-font-size-md: 1rem;       /* 16px */
+  --znk-font-size-lg: 1.1875rem;  /* 19px — sous-titres de carte */
+  --znk-font-size-xl: 1.375rem;   /* 22px — titres de section */
+  --znk-font-size-2xl: 1.75rem;   /* 28px — titre de page */
+  --znk-font-size-3xl: 2.25rem;   /* 36px — hero (usage rare, pages marketing internes uniquement) */
+
+  --znk-font-weight-regular: 400;
+  --znk-font-weight-medium: 600;
+  --znk-font-weight-bold: 700;
+
+  --znk-line-height-tight: 1.2;
+  --znk-line-height-normal: 1.5;
+  --znk-line-height-relaxed: 1.65;
+
+  --znk-letter-spacing-tight: -0.02em; /* réservé aux gros titres (H1/H2), comme sur zenika.com */
+}

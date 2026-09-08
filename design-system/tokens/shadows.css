@@ -1,0 +1,28 @@
+/*
+ * ZenikIA Design System — Shadow tokens
+ * Source : zenika.com n'utilise qu'UNE élévation visible pour ses cards :
+ * `0 4px 4px rgba(0,0,0,.25)`. Sobre, volontairement. On la reprend comme
+ * palier "md" et on ajoute sm/lg/focus pour couvrir les besoins produit
+ * (hover de carte, modale) sans multiplier les élévations Material.
+ */
+
+:root {
+  --znk-shadow-sm: 0 1px 2px rgba(23, 21, 26, 0.06);
+  --znk-shadow-md: 0 4px 4px rgba(23, 21, 26, 0.12); /* palier de référence zenika.com, adapté à un fond clair */
+  --znk-shadow-lg: 0 12px 32px rgba(23, 21, 26, 0.16); /* modales, popovers */
+  --znk-shadow-focus: 0 0 0 3px var(--znk-color-primary-subtle);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --znk-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --znk-shadow-md: 0 4px 4px rgba(0, 0, 0, 0.25); /* valeur exacte zenika.com */
+    --znk-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
+  }
+}
+
+:root[data-theme="dark"] {
+  --znk-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --znk-shadow-md: 0 4px 4px rgba(0, 0, 0, 0.25);
+  --znk-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
+}

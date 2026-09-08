@@ -1,0 +1,75 @@
+spring:
+  application:
+    name: zenikia
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 15MB
+
+  ai:
+    # Which provider answers chat-based calls (CV analysis, question generation, technical/
+    # communication assessment, coaching feedback, final report). "openai" (default) needs
+    # OPENAI_API_KEY + platform.openai.com credits. "ollama" runs fully free against a local
+    # Ollama server — see README "Run for free with Ollama". STT/TTS below stay on OpenAI
+    # either way (Ollama has no audio models) unless the frontend supplies a browser-transcribed
+    # transcript directly, in which case the STT call is skipped entirely (see speech.application).
+    model:
+      chat: ${ZENIKIA_CHAT_PROVIDER:openai}
+    openai:
+      # Spring AI's autoconfiguration fails fast at boot if this is blank. The placeholder lets the
+      # app start (and every non-AI feature work) even without a real key; AI calls then fail with a
+      # clear 502 AI_PROVIDER_ERROR instead of the whole backend refusing to boot. Set OPENAI_API_KEY
+      # in your environment for the AI features to actually work.
+      api-key: ${OPENAI_API_KEY:sk-not-configured}
+      chat:
+        options:
+          model: ${ZENIKIA_OPENAI_CHAT_MODEL:gpt-4o-mini}
+          temperature: 0.4
+      audio:
+        transcription:
+          options:
+            model: ${ZENIKIA_OPENAI_TRANSCRIPTION_MODEL:whisper-1}
+        speech:
+          options:
+            model: ${ZENIKIA_OPENAI_TTS_MODEL:tts-1}
+            voice: ${ZENIKIA_OPENAI_TTS_VOICE:alloy}
+    ollama:
+      base-url: ${ZENIKIA_OLLAMA_BASE_URL:http://localhost:11434}
+      chat:
+        options:
+          model: ${ZENIKIA_OLLAMA_MODEL:llama3.2:3b}
+          temperature: 0.4
+          # Default Ollama context (4096 tokens) is too small once the system prompt + JSON
+          # schema instructions + candidate context (claims, previous transcript...) + the
+          # response itself are combined — the model then runs out of room mid-response and the
+          # JSON comes back truncated (JsonEOFException). 16384 gives real headroom; input is
+          # also now capped defensively (see InterviewOrchestrationService) so this isn't the
+          # only line of defense.
+          num-ctx: ${ZENIKIA_OLLAMA_NUM_CTX:16384}
+          # Hard ceiling on generated tokens per call. Without this, a dense CV (many experiences,
+          # many skills) can push a small local model into a multi-minute generation because
+          # nothing stops it early — it just keeps writing until it hits num-ctx. 2048 tokens is
+          # comfortably more than the capped output the prompts now ask for (see
+          # cv-analysis-system.st "maximum 15 compétences / 5 expériences"); if it's ever hit
+          # mid-JSON, StructuredAiCall's JsonRepair closes the truncated structure instead of
+          # failing outright.
+          num-predict: ${ZENIKIA_OLLAMA_NUM_PREDICT:2048}
+          # Keep the model resident in GPU/CPU memory between calls (Ollama's own default is 5
+          # minutes) — an interview session easily leaves longer gaps between AI calls than that.
+          # NOTE: deliberately NOT disabling "thinking" here — for qwen3 it's what keeps the final
+          # JSON cleanly separated from the model's reasoning; turning it off made a smaller model
+          # dump raw chain-of-thought text straight into the response, breaking JSON parsing
+          # entirely. Slower-but-correct beats faster-but-broken.
+          keep-alive: 30m
+
+server:
+  port: ${PORT:8080}
+
+zenikia:
+  cors:
+    allowed-origins: ${ZENIKIA_ALLOWED_ORIGIN:http://localhost:4200}
+
+logging:
+  level:
+    com.zenika.zenikia: INFO
+    org.springframework.ai: WARN

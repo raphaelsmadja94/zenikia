@@ -1,0 +1,14 @@
+/*
+ * ZenikIA Design System — Radius tokens
+ * Source : zenika.com utilise exactement deux paliers — 16px (cards) et
+ * 25-50px (boutons, quasi-pilule). On les reprend et on ajoute un palier
+ * "sm" pour les petits éléments (badges, inputs) où 16px serait excessif.
+ */
+
+:root {
+  --znk-radius-sm: 8px;    /* inputs, petits badges, tags */
+  --znk-radius-md: 12px;   /* boutons standard, champs de formulaire */
+  --znk-radius-lg: 16px;   /* cards — valeur exacte relevée sur zenika.com */
+  --znk-radius-xl: 20px;   /* cards de mise en avant (ex: score le plus important) */
+  --znk-radius-full: 999px;/* pilule — badges, boutons ronds, avatar */
+}

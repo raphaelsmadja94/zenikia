@@ -1,0 +1,22 @@
+/*
+ * ZenikIA Design System — Breakpoint tokens
+ * Source : zenika.com est construit sur MUI, dont les breakpoints par
+ * défaut (xs/sm/md/lg/xl) sont visibles dans les classes de grille
+ * (MuiGrid-grid-md-6, -lg-4, -xl-3...). On les reprend tels quels —
+ * aucune raison de diverger, et ça garde une cohérence si des éléments
+ * de marque (embeds, iframes) partagent un jour le même rythme.
+ *
+ * CSS ne permet pas d'utiliser une var() dans une media query — ces
+ * tokens sont donc documentés ici pour référence (voir aussi
+ * foundations/responsive.md) et dupliqués en constantes dans le code
+ * (frontend/src/app/shared/ui/breakpoints.ts) plutôt qu'utilisables
+ * directement dans du CSS.
+ *
+ *   --znk-breakpoint-sm: 600px;   -- tablette portrait
+ *   --znk-breakpoint-md: 900px;   -- tablette paysage / petit desktop
+ *   --znk-breakpoint-lg: 1200px;  -- desktop
+ *   --znk-breakpoint-xl: 1536px;  -- grand écran
+ *
+ * Convention d'écriture des media queries dans ce projet : mobile-first,
+ * min-width, sur les mêmes paliers.
+ */

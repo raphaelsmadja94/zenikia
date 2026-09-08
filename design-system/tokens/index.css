@@ -1,0 +1,14 @@
+/*
+ * ZenikIA Design System — point d'entrée unique des tokens.
+ * Le frontend importe CE fichier (pas les fichiers individuels) : voir
+ * frontend/src/styles.css. Garder l'ordre : colors doit précéder shadows
+ * (shadows référence --znk-color-primary-subtle pour le focus ring).
+ */
+
+@import './colors.css';
+@import './typography.css';
+@import './spacing.css';
+@import './radius.css';
+@import './shadows.css';
+@import './z-index.css';
+@import './breakpoints.css';

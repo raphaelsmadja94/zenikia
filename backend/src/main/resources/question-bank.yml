@@ -1,0 +1,131 @@
+# Banque de questions d'entretien de référence, curée à partir de vraies questions
+# utilisées en entretien technique/client. Sert de grounding (exemples de style/niveau)
+# au prompt de génération de question — jamais recopiée telle quelle dans une liste
+# statique : voir interview/infrastructure/QuestionBank.java et
+# resources/prompts/question-generation-system.st ("inspire-toi, n'improvise pas dans
+# le vide, mais n'importe jamais la question mot pour mot sans l'adapter au candidat").
+#
+# Clés : normalisées en minuscules, alignées sur les noms de compétences qu'on voit
+# ressortir d'une extraction de CV (Java, Spring Boot, Angular...) + quelques catégories
+# génériques utilisées en repli (architecture, sécurité, craft, agile, git, http, database)
+# + "posture" utilisée spécifiquement pour le persona RECRUITER après l'ouverture.
+
+java:
+  - "Comment fonctionne la JVM et qu'est-ce qui rend Java « spécial » par rapport à d'autres langages compilés ?"
+  - "Peux-tu me parler des nouveautés qui t'ont marqué entre Java 8 et une version plus récente (17 ou 21) ?"
+  - "Si tu as une collection d'utilisateurs, comment filtrerais-tu ceux de plus de 18 ans et les regrouperais-tu par nom de famille avec les Streams ?"
+  - "Est-ce qu'on peut écrire du code exécutable dans une interface Java ? Depuis quelle version, et pourquoi cette évolution ?"
+  - "Quels types de collections Java connais-tu, et comment choisis-tu laquelle utiliser selon le contexte ?"
+  - "Qu'est-ce qu'une référence de méthode en Java, et à quelles conditions un bout de code y est éligible ?"
+
+spring:
+  - "Quel est le principal design pattern implémenté par le conteneur Spring ?"
+  - "Qu'est-ce qu'un stéréotype Spring ? Peux-tu m'en citer et expliquer la différence entre eux ?"
+  - "Quels sont les différents scopes de bean disponibles dans Spring, et quand utiliserais-tu autre chose que le singleton ?"
+  - "Comment gères-tu les transactions avec Spring ? Peux-tu m'expliquer ce que sont les niveaux d'isolation ?"
+  - "Quelle différence fais-tu entre @Bean et @Component ?"
+  - "Quelle différence entre @Resource, @Autowired et @Inject ?"
+
+hibernate:
+  - "Peux-tu m'expliquer la différence entre le chargement Lazy et Eager avec Hibernate/JPA ?"
+  - "Quelles stratégies utilises-tu pour éviter le problème du N+1 select ?"
+  - "Connais-tu HQL ou l'API Criteria ? Dans quel cas les utiliserais-tu plutôt qu'une requête native ?"
+
+javascript:
+  - "Quelle différence fais-tu entre var, let et const ?"
+  - "Peux-tu m'expliquer ce que sont les promesses, et ce qu'apporte async/await par rapport aux callbacks ?"
+  - "Quelle est la différence entre == et === ? Pourquoi ça compte ?"
+  - "Qu'est-ce qu'une fonction immédiatement invoquée (IIFE), et dans quel cas ça a été utile ?"
+  - "Quelles sont les différences entre les modules ECMAScript et les modules CommonJS ?"
+
+typescript:
+  - "Qu'est-ce que TypeScript apporte concrètement par rapport à du JavaScript pur, dans ton expérience ?"
+  - "Une interface TypeScript est-elle un vrai type au sens strict ? À quel moment se fait la vérification des types ?"
+  - "Quels pièges ou mauvaises pratiques faut-il éviter pour vraiment profiter de TypeScript ?"
+
+angular:
+  - "En Angular, quel est le mécanisme qui permet de lier les données du modèle à l'affichage ?"
+  - "Peux-tu m'expliquer la différence entre un composant standalone et un module Angular classique ?"
+  - "Comment utilises-tu les Signals ou RxJS pour gérer un état asynchrone dans un composant ?"
+
+react:
+  - "Sur quel modèle se base React pour le rendu de l'interface ?"
+  - "Peux-tu m'expliquer la différence entre un state et une prop en React ?"
+  - "Que sont les smart et dumb components ? Pourquoi cette distinction est utile ?"
+  - "Qu'est-ce que le Server Side Rendering, et dans quel cas l'utiliserais-tu ?"
+
+node:
+  - "Quel mécanisme permet à Node.js d'être performant malgré un modèle mono-thread ?"
+  - "Peux-tu m'expliquer ce qu'est la boucle d'événements (event loop) ?"
+
+html:
+  - "Comment structurerais-tu le HTML d'une page contenant un article de blog, en restant sémantique ?"
+  - "Comment permets-tu au navigateur de choisir la bonne image selon le contexte (résolution, format) ?"
+  - "Comment t'assures-tu que les éléments graphiques restent accessibles ?"
+
+css:
+  - "Comment ferais-tu une mise en page en colonnes en CSS aujourd'hui — flexbox, grid, autre ?"
+  - "Comment centrerais-tu un élément horizontalement et verticalement ?"
+  - "Comment abordes-tu le responsive web design sur un projet ?"
+
+git:
+  - "Connais-tu différents workflows Git ? Lequel utilises-tu le plus souvent, et pourquoi ?"
+  - "Dans quels cas préfères-tu un merge plutôt qu'un rebase ?"
+  - "On t'interrompt en pleine feature pour un bug urgent à traiter sur une autre branche, comment gères-tu ça avec Git ?"
+
+http:
+  - "Quel code d'erreur HTTP obtiendrais-tu en tentant d'accéder à une ressource que tu viens de supprimer ?"
+  - "Qu'est-ce qui rend une API vraiment RESTful selon toi, au-delà de juste utiliser des verbes HTTP ?"
+  - "Quelles garanties apporte le caractère stateless d'une architecture REST pour la scalabilité ?"
+
+database:
+  - "Comment améliores-tu les performances d'une requête SQL qui traîne ? Quels outils ou réflexes utilises-tu ?"
+  - "Que garantit l'acronyme ACID dans une base de données relationnelle ?"
+  - "Quelle différence fais-tu entre un verrou optimiste et un verrou pessimiste sur l'accès concurrent à la donnée ?"
+  - "Dans quel cas envisagerais-tu de migrer d'une base relationnelle vers une solution NoSQL ?"
+
+mongodb:
+  - "Peux-tu m'expliquer le fonctionnement d'un replica set MongoDB (primaire, secondaire, election) ?"
+  - "Comment ferais-tu du scaling horizontal avec MongoDB ? Qu'est-ce que le sharding apporte concrètement ?"
+
+kafka:
+  - "Dans quel cas choisirais-tu Kafka plutôt que RabbitMQ pour un besoin de messagerie ?"
+  - "Que se passe-t-il concrètement quand un consumer quitte son consumer group ?"
+  - "Comment garantis-tu l'ordre des messages avec Kafka quand c'est nécessaire métier ?"
+
+kubernetes:
+  - "Quels problèmes concrets Kubernetes résout-il qu'un simple scaling horizontal de VMs ne résout pas ?"
+  - "Comment gères-tu la configuration et les secrets d'une application dans Kubernetes ?"
+
+architecture:
+  - "Qu'est-ce qui te ferait dire qu'une application devrait rester un monolithe plutôt que d'être découpée en microservices ?"
+  - "Quels sont pour toi les principaux dangers d'une architecture microservices mal maîtrisée ?"
+  - "Comment expliquerais-tu l'architecture hexagonale à quelqu'un qui ne la connaît pas ? Est-ce toujours adapté ?"
+  - "Qu'est-ce que l'event sourcing, et dans quel contexte ça a du sens ?"
+  - "Comment peut-on lisser une charge importante sur un système, techniquement ?"
+
+security:
+  - "Quelles pratiques de sécurité appliques-tu au quotidien dans ton code (validation des inputs, authentification, chiffrement) ?"
+  - "Que sais-tu du RGPD et de son impact concret sur la conception d'une application ?"
+
+agile:
+  - "Qu'est-ce que l'agilité pour toi, concrètement — et dans quel cas ne faudrait-il pas l'appliquer ?"
+  - "Quels signes te feraient dire qu'une équipe ou un projet fonctionne mal ?"
+  - "Scrum ou Kanban — comment choisis-tu, et pourquoi ?"
+
+craft:
+  - "Comment t'assures-tu de la qualité d'un code que tu livres (revue, pair programming, outils) ?"
+  - "Que représentent pour toi KISS et YAGNI dans tes décisions de code au quotidien ?"
+  - "Peux-tu m'expliquer ce que sont TDD et BDD, et ce qui change concrètement dans ta façon de coder ?"
+  - "Quelles garanties a-t-on vraiment si un code est couvert à 100% par des tests ? Et celles qu'on n'a pas ?"
+  - "Peux-tu citer un design pattern que tu as utilisé récemment, et pourquoi il était pertinent ici ?"
+
+posture:
+  - "Comment gères-tu un désaccord avec un collègue lors d'une code review ?"
+  - "Qu'est-ce qui te motive à venir travailler le matin ? Quelle serait ta mission idéale ?"
+  - "Racontes-moi une réussite dont tu es fier, professionnelle ou personnelle."
+  - "Si on te dit que ton code n'est pas au niveau, comment réagis-tu sur le moment ?"
+  - "Sur quoi te sens-tu bon aujourd'hui, et sur quoi cherches-tu à progresser ?"
+  - "Quelle est ta relation idéale avec un Product Owner au quotidien ?"
+  - "Quel est pour toi le rôle d'un développeur au sein d'une équipe projet ?"
+  - "As-tu déjà cassé quelque chose d'important en production ? Comment as-tu géré la suite ?"

@@ -1,0 +1,23 @@
+/*
+ * ZenikIA Design System — Spacing tokens
+ * Échelle en base 4px (zenika.com utilise une grille MUI en base 8, on
+ * garde la compatibilité en ne définissant que des multiples de 4 qui
+ * tombent aussi sur la grille 8 aux paliers usuels).
+ * Toujours utiliser ces tokens pour padding/margin/gap — jamais une valeur
+ * px en dur dans un composant (voir l'audit du frontend existant,
+ * DESIGN_SYSTEM.md §Audit, qui documente pourquoi cette règle existe).
+ */
+
+:root {
+  --znk-space-0: 0;
+  --znk-space-1: 0.25rem;  /* 4px  — espacement interne minimal (icône ↔ texte) */
+  --znk-space-2: 0.5rem;   /* 8px  — gap serré (chip, badge) */
+  --znk-space-3: 0.75rem;  /* 12px */
+  --znk-space-4: 1rem;     /* 16px — unité de base la plus courante */
+  --znk-space-5: 1.25rem;  /* 20px */
+  --znk-space-6: 1.5rem;   /* 24px — padding de carte standard */
+  --znk-space-8: 2rem;     /* 32px — padding de carte généreux, séparation de sections */
+  --znk-space-10: 2.5rem;  /* 40px */
+  --znk-space-12: 3rem;    /* 48px — séparation de grandes sections de page */
+  --znk-space-16: 4rem;    /* 64px — hero / zones d'accueil */
+}

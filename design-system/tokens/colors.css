@@ -1,0 +1,125 @@
+/*
+ * ZenikIA Design System — Color tokens
+ *
+ * Source: extrait de zenika.com (DevTools, valeurs réelles — pas des
+ * approximations) puis traduit pour un produit logiciel (contraste
+ * renforcé, gradient réservé aux actions principales). Voir
+ * design-system/DESIGN_SYSTEM.md §Palette pour la justification complète.
+ *
+ * Convention : SEMANTIC tokens (--znk-color-*) partout dans les
+ * composants. Les PRIMITIVES (--znk-palette-*) ne sont référencées que
+ * par ce fichier lui-même — jamais directement par un composant.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Primitives (issues de l'audit zenika.com) ---- */
+  --znk-palette-red-600: #ee2238;   /* extrémité "chaude" du gradient CTA Zenika */
+  --znk-palette-pink-700: #bf1d67;  /* extrémité "froide" du gradient CTA Zenika */
+  --znk-palette-red-500: #df2147;   /* rouge Zenika solide (logo) */
+  --znk-palette-amber-400: #f2b153; /* accent décoratif du site */
+  --znk-palette-violet-400: #8d87ec;/* accent décoratif du site */
+  --znk-palette-ink-900: #121212;   /* fond sombre zenika.com */
+  --znk-palette-ink-800: #1e1e1e;   /* surface sombre zenika.com */
+
+  /* ---- Semantic tokens — thème clair (défaut produit) ---- */
+  --znk-color-primary: #c81e4f;           /* dérivé du gradient CTA, densifié pour un usage répété (texte de lien, bordures) */
+  --znk-color-primary-hover: #a8173f;
+  --znk-color-primary-active: #8c1234;
+  --znk-color-primary-subtle: #fdecf1;    /* fond léger (badges, sélection) */
+  --znk-color-on-primary: #ffffff;
+
+  --znk-color-background: #f7f7f9;
+  --znk-color-surface: #ffffff;
+  --znk-color-surface-secondary: #f1f1f5;
+  --znk-color-surface-inverse: var(--znk-palette-ink-900);
+
+  --znk-color-text-primary: #17151a;
+  --znk-color-text-secondary: #5a5763;
+  --znk-color-text-muted: #8b8894;
+  --znk-color-text-on-inverse: rgba(255, 255, 255, 0.87); /* convention Material reprise du site source */
+
+  --znk-color-border: #e4e2e8;
+  --znk-color-border-strong: #c9c6d1;
+
+  --znk-color-success: #1a8f5e;
+  --znk-color-success-bg: #e9f8f1;
+  --znk-color-warning: #b3690a;
+  --znk-color-warning-bg: #fdf1e2;
+  --znk-color-error: #c02b3a;
+  --znk-color-error-bg: #fbeaec;
+  --znk-color-info: #5b53d6;
+  --znk-color-info-bg: #eeedfc;
+
+  /* Réservé aux moments "signature" (CTA principal, score le plus important du rapport) —
+     jamais utilisé pour un simple bouton secondaire. Voir components/button.md. */
+  --znk-gradient-brand: linear-gradient(135deg, var(--znk-palette-red-600) 0%, var(--znk-palette-pink-700) 100%);
+}
+
+/* ---- Thème sombre (optionnel — l'app reste claire par défaut) ---- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --znk-color-primary: #ff5c81;
+    --znk-color-primary-hover: #ff7d9b;
+    --znk-color-primary-active: #ffa0b6;
+    --znk-color-primary-subtle: #3a1622;
+    --znk-color-on-primary: #17151a;
+
+    --znk-color-background: var(--znk-palette-ink-900);
+    --znk-color-surface: rgba(30, 30, 30, 0.6);
+    --znk-color-surface-secondary: #1e1e1e;
+    --znk-color-surface-inverse: #f7f7f9;
+
+    --znk-color-text-primary: rgba(255, 255, 255, 0.92);
+    --znk-color-text-secondary: rgba(255, 255, 255, 0.7);
+    --znk-color-text-muted: rgba(255, 255, 255, 0.5);
+    --znk-color-text-on-inverse: #17151a;
+
+    --znk-color-border: rgba(255, 255, 255, 0.12);
+    --znk-color-border-strong: rgba(255, 255, 255, 0.24);
+
+    --znk-color-success: #4ade80;
+    --znk-color-success-bg: #123321;
+    --znk-color-warning: #fbbf24;
+    --znk-color-warning-bg: #3a2a0a;
+    --znk-color-error: #f87171;
+    --znk-color-error-bg: #3a1418;
+    --znk-color-info: #a5b4fc;
+    --znk-color-info-bg: #201d3a;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --znk-color-primary: #ff5c81;
+  --znk-color-primary-hover: #ff7d9b;
+  --znk-color-primary-active: #ffa0b6;
+  --znk-color-primary-subtle: #3a1622;
+  --znk-color-on-primary: #17151a;
+
+  --znk-color-background: var(--znk-palette-ink-900);
+  --znk-color-surface: rgba(30, 30, 30, 0.6);
+  --znk-color-surface-secondary: #1e1e1e;
+  --znk-color-surface-inverse: #f7f7f9;
+
+  --znk-color-text-primary: rgba(255, 255, 255, 0.92);
+  --znk-color-text-secondary: rgba(255, 255, 255, 0.7);
+  --znk-color-text-muted: rgba(255, 255, 255, 0.5);
+  --znk-color-text-on-inverse: #17151a;
+
+  --znk-color-border: rgba(255, 255, 255, 0.12);
+  --znk-color-border-strong: rgba(255, 255, 255, 0.24);
+
+  --znk-color-success: #4ade80;
+  --znk-color-success-bg: #123321;
+  --znk-color-warning: #fbbf24;
+  --znk-color-warning-bg: #3a2a0a;
+  --znk-color-error: #f87171;
+  --znk-color-error-bg: #3a1418;
+  --znk-color-info: #a5b4fc;
+  --znk-color-info-bg: #201d3a;
+}
